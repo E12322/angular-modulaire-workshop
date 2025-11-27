@@ -1,0 +1,49 @@
+<h2>Liste des Suggestions</h2>
+
+<!-- 🔎 BARRE DE RECHERCHE -->
+<input type="text"
+       placeholder="Rechercher par titre ou catégorie..."
+       [(ngModel)]="searchText">
+
+<hr>
+
+<!-- 🔁 AFFICHAGE DES SUGGESTIONS -->
+<div *ngFor="let s of filteredSuggestions" class="card">
+
+  <h3>{{ s.title }}</h3>
+  <p>{{ s.description }}</p>
+
+  <p><strong>Catégorie :</strong> {{ s.category }}</p>
+  <p><strong>Date :</strong> {{ s.date | date }}</p>
+
+  <p>
+    <strong>Status :</strong>
+    <span [style.color]="s.status === 'refusee' ? 'red' : 'green'">
+      {{ s.status }}
+    </span>
+  </p>
+
+  <!-- 👍 LIKE & ⭐ FAVORIS (NgIf : ne s'affichent pas si refusé) -->
+  <div *ngIf="s.status !== 'refusee'">
+    <button (click)="like(s)">👍 Like</button>
+    <span>{{ s.likes }}</span>
+
+    <button (click)="addToFavorites(s)">⭐ Ajouter aux favoris</button>
+  </div>
+
+</div>
+
+<hr>
+
+<!-- ⭐ LISTE DES FAVORIS -->
+<h3>Favorites :</h3>
+
+<div *ngIf="favorites.length === 0">
+  Aucun favori pour le moment.
+</div>
+
+<ul>
+  <li *ngFor="let f of favorites">
+    {{ f.title }} - {{ f.category }}
+  </li>
+</ul>
