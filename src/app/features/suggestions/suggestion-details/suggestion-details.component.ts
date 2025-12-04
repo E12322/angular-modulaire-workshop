@@ -1,0 +1,21 @@
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
+@Component({
+  selector: 'app-suggestion-details',
+  templateUrl: './suggestion-details.component.html',
+})
+export class SuggestionDetailsComponent implements OnInit {
+  suggestionId!: string;
+
+  constructor(private route: ActivatedRoute, private router: Router) {}
+
+  ngOnInit(): void {
+    this.suggestionId = this.route.snapshot.paramMap.get('id')!;
+    // ici tu peux charger les détails depuis un service
+  }
+
+  backToList(): void {
+    this.router.navigate(['/suggestions']);
+  }
+}

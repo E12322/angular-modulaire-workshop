@@ -1,13 +1,13 @@
 <h2>Liste des Suggestions</h2>
 
-<!-- 🔎 BARRE DE RECHERCHE -->
+<!-- BARRE DE RECHERCHE -->
 <input type="text"
        placeholder="Rechercher par titre ou catégorie..."
        [(ngModel)]="searchText">
 
 <hr>
 
-<!-- 🔁 AFFICHAGE DES SUGGESTIONS -->
+<!--  AFFICHAGE DES SUGGESTIONS -->
 <div *ngFor="let s of filteredSuggestions" class="card">
 
   <h3>{{ s.title }}</h3>
@@ -23,7 +23,7 @@
     </span>
   </p>
 
-  <!-- 👍 LIKE & ⭐ FAVORIS (NgIf : ne s'affichent pas si refusé) -->
+  <!-- 👍 LIKE & ⭐ FAVORIS 
   <div *ngIf="s.status !== 'refusee'">
     <button (click)="like(s)">👍 Like</button>
     <span>{{ s.likes }}</span>
