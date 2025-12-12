@@ -1,49 +1,35 @@
-<h2>Liste des Suggestions</h2>
+<div class="container">
 
-<!-- BARRE DE RECHERCHE -->
-<input type="text"
-       placeholder="Rechercher par titre ou catégorie..."
-       [(ngModel)]="searchText">
+  <div class="search-bar">
+    <input type="text" placeholder="Rechercher..." [(ngModel)]="searchText">
+  </div>
 
-<hr>
+  <div class="suggestion-list">
+    <div class="card" *ngFor="let s of filteredSuggestions">
+      <h3>{{ s.title }}</h3>
+      <p>{{ s.description }}</p>
+      <p><strong>Catégorie:</strong> {{ s.category }}</p>
+      <p><strong>Date:</strong> {{ s.date | date:'shortDate' }}</p>
+      <p>
+        <strong>Status:</strong>
+        <span [ngStyle]="{'color': s.status==='refusee'?'red': s.status==='acceptee'?'green':'orange'}">
+          {{ s.status }}
+        </span>
+      </p>
+      <div class="actions">
+        <button (click)="like(s)">👍 {{ s.nbLikes }}</button>
+        <button (click)="addToFavorites(s)">
+          {{ favorites.includes(s) ? 'Dans les favoris' : 'Ajouter aux favoris' }}
+        </button>
+      </div>
+    </div>
+  </div>
 
-<!--  AFFICHAGE DES SUGGESTIONS -->
-<div *ngFor="let s of filteredSuggestions" class="card">
-
-  <h3>{{ s.title }}</h3>
-  <p>{{ s.description }}</p>
-
-  <p><strong>Catégorie :</strong> {{ s.category }}</p>
-  <p><strong>Date :</strong> {{ s.date | date }}</p>
-
-  <p>
-    <strong>Status :</strong>
-    <span [style.color]="s.status === 'refusee' ? 'red' : 'green'">
-      {{ s.status }}
-    </span>
-  </p>
-
-  <!-- 👍 LIKE & ⭐ FAVORIS 
-  <div *ngIf="s.status !== 'refusee'">
-    <button (click)="like(s)">👍 Like</button>
-    <span>{{ s.likes }}</span>
-
-    <button (click)="addToFavorites(s)">⭐ Ajouter aux favoris</button>
+  <div class="favorites" *ngIf="favorites.length>0">
+    <h2>Favoris</h2>
+    <ul>
+      <li *ngFor="let f of favorites">{{ f.title }} - {{ f.category }}</li>
+    </ul>
   </div>
 
 </div>
-
-<hr>
-
-<!-- ⭐ LISTE DES FAVORIS -->
-<h3>Favorites :</h3>
-
-<div *ngIf="favorites.length === 0">
-  Aucun favori pour le moment.
-</div>
-
-<ul>
-  <li *ngFor="let f of favorites">
-    {{ f.title }} - {{ f.category }}
-  </li>
-</ul>
